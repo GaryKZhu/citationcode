@@ -1,12 +1,12 @@
 # citationcode
 
 citationparse.ipynb 
-Code Features ->
+Code Features -> '\n'
 Read file, parse it into sentences, fixes wrong formatting of the text file
 Finds all citations in that sentences. 
 Detects the FTFTF pattern. 
 
-Features to implement -> 
+Features to implement -> '\n'
 Different data format
 Ability to loop through all of the files in a folder
 
