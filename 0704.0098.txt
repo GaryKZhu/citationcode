@@ -1,0 +1,700 @@
+
+Sparsely-spread CDMA - a statistical mechanics based analysis
+Jack Raymond and David Saad
+Neural Computation Research Group, Aston University, Aston Triangle, Birmingham, B4 7EJ
+
+jack.raymond@physics.org
+Sparse Code Division Multiple Access (CDMA), a variation on the
+standard CDMA method in which the spreading (signature) matrix
+contains only a relatively small number of non-zero elements, is
+presented and analysed using methods of statistical physics. The
+analysis provides results on the performance of maximum likelihood
+decoding for sparse spreading codes in the large system limit. We
+present results for both cases of regular and irregular spreading
+matrices for the binary additive white Gaussian noise channel
+(BIAWGN) with a comparison to the canonical (dense) random
+spreading code.
+
+64.60.Cn, 75.10.Nr, 84.40.Ua, 89.70.+c
+68P30,82B44,94A12,94A14
+2020/09/07 07:31:42
+Background
+The area of multiuser communications is one of great interest from
+both theoretical and engineering perspectives {{cite:50efda5d-b1f8-4ec6-9f21-2fb2fdc7208b}}.
+Code Division Multiple Access (CDMA) is a particular method for
+allowing multiple users to access channel resources in an
+efficient and robust manner, and plays an important role in the
+current preferred standards for allocating channel resources in
+wireless communications. CDMA utilises channel resources highly
+efficiently by allowing many users to transmit on much of the
+bandwidth simultaneously, each transmission being encoded with a
+user specific signature code. Disentangling the information in the
+channel is possible by using the properties of these codes and
+much of the focus in CDMA research is on developing efficient
+codes and decoding methods.
+In this paper we study a variant of the original method, sparse CDMA, where the spreading matrix contains only a relatively small number of non-zero elements as was originally studied and motivated in {{cite:d7315378-97ad-43d1-8c12-99739473a2e1}}. While the straightforward application of sparse CDMA techniques to uplink
+multiple access communication is rather limited, as it is difficult to synchronise the sparse transmissions from the various users, the method can be highly useful for frequency and time hopping. In frequency-hopping code division multiple access (FH-CDMA), one repeatedly switches frequencies during radio transmission, often to minimize the effectiveness of interception or jamming of telecommunications. At any given time step, each user occupies a small (finite) number of the (infinite) FORMULA -ary frequency-shift-keying (MFSK) chip/carrier pairs (with gain FORMULA , the total number of chip-frequency pairs is FORMULA .) Hops between available frequencies can be either random or preplanned and take place after the transmission of data on a narrow frequency band. In time-hopping (TH-)CDMA, a pseudo-noise sequence defines the transmission moment for the various users, which can be viewed as sparse CDMA when used in an ultra-wideband impulse communication system. In this case the sparse time-hopping sequences reduces collisions between transmissions.
+This study follows the seminal paper of Tanaka {{cite:a7e9ccb6-e1dd-497c-8e75-67f4e2178e97}},
+and other recent extensions {{cite:7d159b88-efa9-40ac-9293-916d2e5c7896}}, in utilising the
+replica analysis for randomly spread CDMA with discrete inputs,
+which established many of the properties of random densely-spread
+CDMA with respect to several different detectors including Maximum
+A Posteriori (MAP), Marginal Posterior Maximiser (MPM)
+and minimum mean square-error (MMSE). Sparsely-spread CDMA differs
+from the conventional CDMA, based on dense spreading sequences, in
+that any user only transmits to a small number of chips (by
+comparison to transmission on all chips in the case of dense
+CDMA). The sparse nature of this model facilitates the use of
+methods from statistical physics of dilute disordered
+systems {{cite:57e90a6c-665a-4ac2-a781-3d613ec163de}}, {{cite:aa06808f-f657-49e9-91b7-e7d9f65ed7d8}} for studying the properties
+of typical cases.
+The feasibility of sparse CDMA for transmitting information was recently demonstrated {{cite:d7315378-97ad-43d1-8c12-99739473a2e1}} for the c
+approximation; several results have been reported for the case of random transmission patterns. In a separate recent study, based on the belief propagation inference algorithm and a binary input prior distribution, sparse CDMA has also been considered as a route to proving results in the densely spread CDMA {{cite:ffbfd2b1-c949-496a-a501-8d1a513671b3}}. In addition, this study demonstrated the existence of a waterfall phenomenon comparable to the dense code for a subset of ensembles. The waterfall phenomenon is observed in decoding techniques, where there is a dynamical transition between two statistically distinct solutions as the noise parameter is varied. Finally we note a number of pertinent studies concerning the effectiveness of belief propagation as an MPM decoding method {{cite:8b55b3f0-60ac-4765-8453-8a99a85bc78e}}, {{cite:5918d0b2-029f-48f6-b4bb-9c9ddb38f318}}, {{cite:bb28d399-8515-46a6-8ad4-417a91f004e2}}, {{cite:bc5b8b49-dcbf-4360-a772-30128ad294a4}}, and in combining sparse encoding (LDPC) methods with CDMA {{cite:59edee78-1b4b-443a-bdc5-6998d5128202}}. Many of these papers however consider the extreme dilution regime – in which the number of chip contributions is large but not FORMULA .
+The theoretical work regarding sparsely spread CDMA remained
+lacking in certain respects. As pointed out in {{cite:d7315378-97ad-43d1-8c12-99739473a2e1}},
+spreading codes with Poisson distributed number of non-zero
+elements, per chip and across users, are systematically failing in
+that each user has some probability of not contributing to any
+chips (transmitting no information). Even in the “partly
+regular” code {{cite:ffbfd2b1-c949-496a-a501-8d1a513671b3}} ensemble (where each user
+transmits on the same number of chips) some chips have no
+contributors owing to the Poisson distribution in chip
+connectivity, consequently the bandwidth is not effectively
+utilised. We circumvent this problem by introducing constraints to
+prevent this, namely taking regular signature codes constrained
+such that both the number of users per chip and chips per user
+take fixed integer values. Furthermore we present analytic and
+numerical analysis without resort to Gaussian approximations of
+any quantities. Using new tools from statistical mechanics we are
+able to cast greater light on the nature of the binary prior
+transmission process. Notably the nature of the decoding state
+space and relative performance of sparse ensembles versus dense
+ones across a range of noise levels; and importantly, the question
+of how the coexistence of solutions found by
+Tanaka {{cite:a7e9ccb6-e1dd-497c-8e75-67f4e2178e97}} extends to sparse ensembles, especially
+close to the transition points determined for the dense ensemble.
+In this paper we demonstrate the superiority of regular sparsely
+spread CDMA code over densely spread codes in certain respects,
+for example, the anticipated bit error rate arising in decoding is
+improved in the high noise regime and the solution coexistence
+behaviour is less pervasive. Furthermore, to utilise belief
+propagation for such an ensemble is certain to be significantly
+faster and less computationally demanding {{cite:f2e11831-4e0a-4790-9e89-905b06939e05}}, this also has
+power-consumption implications which may be important in some applications. Other practical issues
+of implementation, the most basic being non-synchronisation and
+power control, require detailed study and may make fully
+harnessing these advantages more complex and application
+dependent.
+The paper is organised as follows: In section  we will
+introduce the general framework and notation used, while the
+methodology used for the various codes will be presented in
+section . The main results for the various codes
+will be presented in section  followed by concluding
+remarks in section .
+
+The model
+FIGURE 
+We consider a standard model of CDMA consisting of FORMULA  users
+transmitting in a bit interval of FORMULA  chips. We assume a model
+with perfect power control and synchronisation, and consider only
+the single bit interval. In our case the received signal FORMULA  is
+described by
+FORMULA 
+where the vector components describe the values for distinct
+chips: FORMULA  is the spreading code for user FORMULA , FORMULA  is
+the bit sent by user FORMULA  (binary input symbols) and FORMULA  the
+noise vector. Appropriate normalisation of the power is through
+the definition of the signature matrix (FORMULA ). It is possible
+to include a user or chip specific amplitude variation, which may
+be due to fading or imperfect power control. We consider a model
+without these effects.
+The spreading codes are sparse so that
+in expectation only FORMULA  of the elements in vector FORMULA  are non-zero.
+If, with knowledge of the signature matrix in use, we assume the
+signal has been subject to additive white Gaussian channel noise
+of variance FORMULA , where FORMULA  is the variance
+of the true channel noise FORMULA , we can write
+the posterior for the transmitted bits FORMULA  (unknowns given the
+particular instance) using Bayes Theorem
+FORMULA 
+and from this define bit error rate, mutual information, and other
+quantities. The statistical mechanics approach from here is to
+define a Hamiltonian and partition function from which the various
+statistics relating to this probability distribution may be
+determined - and hence all the usual information theory measures.
+A suitable choice for the Hamiltonian is
+FORMULA 
+We can here identify FORMULA  as the dynamical variables in the
+inference problem (dependence shown explicitly). The other
+quenched variables (parameters), describing the instance of the
+disorder, are the signature matrix (FORMULA ), noise (FORMULA )
+and the inputs (FORMULA ).
+The variables FORMULA  describe our prior beliefs about the inputs
+(the specific user bias), and we can assume some simple distribution for this such as
+all users having the same bias FORMULA . Maximal rate transmission corresponds
+to unbiased bits FORMULA , and this is considered throughout the paper.
+The properties of such a system may be
+reflected in a factor (Tanner) graph, a bipartite graph in which
+users and chips are represented by nodes (see figure REF ).
+The calculation we undertake is specific to the case of the
+thermodynamic limit in which the number of chips FORMULA  whilst the load FORMULA  is fixed. Note that FORMULA 
+is termed FORMULA  in many CDMA papers, here we reserve
+FORMULA  to mean the “inverse temperature” in a statistical
+mechanics sense
+(which defines our prior belief for the noise level and give rise
+to the corresponding MAP detector.)
+In all ensembles we may identify the parameter FORMULA  as the mean
+number of contributions to each chip, and FORMULA  as the mean number
+of contributions per user. As such the following also holds
+FORMULA 
+The case in which FORMULA  is greater than 1 will be called
+oversaturated, since more than one bit is being transmitted per
+chip.
+The calculations presented henceforth are specific to the case of
+memoryless noise, drawn from a single distribution of mean zero and mean square  FORMULA
+FORMULA 
+Defining
+normalised spreading codes such that FORMULA 
+, we can identify the “power spectral density” (FORMULA )
+over a chip interval
+as a measure of the system
+noise
+FORMULA 
+– the factor two being connected with physical considerations
+in implementing the model.
+Code Ensembles
+We consider several code ensembles we call
+irregular, partly regular and regular, which differ in the
+constraints placed on the factor and variable degree constraints
+of the signature matrix FORMULA . The probability distribution
+FORMULA 
+where FORMULA  is a normalising constant, FORMULA  is the factor
+degree probability distribution of mean FORMULA , FORMULA  is the
+variable degree probability distribution of mean FORMULA , and
+FORMULA  is the marginal probability distribution which is
+common to all ensembles
+FORMULA 
+The form of (REF ) is then sufficient for the sparse distributions we consider in the large system limit, and makes explicit the chip and user connectivity properties of the ensembles.
+The gain factor FORMULA , is drawn randomly from a single
+distribution with zero measure at FORMULA , and finite moments, in
+any instance of a code
+FORMULA 
+Unlike the dense case the details of this distribution will effect
+results, but only in a small way for reasonable choices {{cite:d7315378-97ad-43d1-8c12-99739473a2e1}}.
+We here investigate the case of Binary Phase
+Shift Keying (BPSK) which corresponds to a uniform distribution on
+FORMULA , though the analytic
+results presented are applicable to any distribution of mean
+square FORMULA . Note that disorder in the gain factors is not a necessity, the
+case FORMULA  also allows decoding in sparse ensembles.
+The case where FORMULA  and FORMULA  are Poissonian distributed
+identifies the irregular ensemble - where the connections between
+chips and users are independently distributed. The second
+distribution called partly regular has FORMULA , in
+which the chip connectivity is again Poisson distributed with mean
+FORMULA , but each user contributes to exactly FORMULA  chips. This prevents
+the systematic failure inherent in the irregular ensemble since
+therein an extensive number of users fail to transmit on any
+chips. If in addition to the aforementioned constraint all chips
+receive exactly FORMULA  contributions, FORMULA , the
+ensemble is called regular. Regular chip connectivity amongst
+other things prevents the systematic inefficiency due to leaving
+some chips unaccessed by any of the users. The case of Poissonian
+distributions is that in which there is no global control. In many
+engineering applications constraining users individually
+(non-Poissonian FORMULA ) is practical, whereas coordination
+between users (non-Poissonian FORMULA ) is difficult. The
+practicalities of implementing the different ensembles we consider
+are application specific: the advantages inherent in distributing
+channel resources more evenly amongst users may be lost to
+practical implentation problems.
+
+Methodology
+Spectral Efficiency Lower Bound
+The inferiority of codes with Poissonian user connectivity
+has been pointed out previously
+(e.g., in {{cite:d7315378-97ad-43d1-8c12-99739473a2e1}}), based on the understanding that
+codes which leave a portion of the users disconnected cannot be
+optimal. Analogously we argue that codes with irregular chip connectivity
+must also be inferior in that they leave a fraction of the chips (bandwidth) unutilised,
+thus providing a motivation for considering fully regular codes.
+In this section we
+show a particular case in which the regular codes are expected to outperform any other
+ensemble by analysing the amount of information that can be extracted
+on the sent bits by consideration of only one chip in isolation of the other chips. This
+corresponds to a detector reconstructing bits based only on the value of a
+single chip, and is independent of the user connectivity.
+The spectral efficiency is defined as the mutual information
+between the received signal and reconstructed bits per chip. In considering only a single chip (FORMULA ) we have
+FORMULA 
+where the subscript zero indicates that the true (generative),
+rather than model (REF ), probability distribution. For brevity we consider the simplest case that the generative and model probability distributions are the same with unbiased bits and a Gaussian noise distribution in which case after some rearrangement
+FORMULA 
+where FORMULA  are the bits connected to chip FORMULA , and the chip Hamiltonian is
+FORMULA 
+labelling each interacting (non-zero) component on the chip by FORMULA , FORMULA  being the chip connectivity.
+Working from this description we wish to compare the performance of ensembles with different chip connectivities. To do this we consider the ensemble average mutual information by averaging the mutual information over the connectivities (FORMULA ), load factors, and transmitted bits. This average is complicated, however it is possible to calculate the dominant terms in the low and high FORMULA  limits.
+In the case of low noise (FORMULA ) we find the asymptotically dominant terms come first from the numerator
+FORMULA 
+which is an average over the ground state energy, and also the logarithm of the denominator which is
+FORMULA 
+where FORMULA  has been decomposed into its bit (FORMULA ) and noise (FORMULA ) parts, and the averages are now over the ensembles as well as FORMULA . The first part of (REF ) gives an energy contribution cancelling (REF ). We call the remaining part the average over the chip entropy, by comparison with (REF ) this determines the amount of information lost in decoding. The chip entropy term contains an indicator function counting the ground states - the average chip entropy is zero when FORMULA  is the only solution. For the case of FORMULA  however there may be some degeneracy in ground states with two terms in the sum being non-zero but cancelling one another. This degeneracy has a dependence on the distribution FORMULA  for given FORMULA . Averaging over load factors and transmitted bits we find that in the zero noise limit
+FORMULA 
+By numerical evaluation of this function (see results section REF ) we find that the optimal ensemble is in fact the regular ensemble. This is because chip entropy, when averaged over load factors and bits is a concave function in FORMULA , so that the information loss is minimised when FORMULA . This dependency on FORMULA  may be a peculiarity of the detector considered, but many other aspects of the calculation may be generalised to give a similar result.
+It is possible to consider the opposite limit FORMULA  perturbatively. We found that the leading four
+orders in FORMULA  were identical for all code ensembles of
+the same mean chip connectivity. We would anticipate the behaviour at
+non-extreme FORMULA  to fall somewhere between these two regimes and
+thus for the chip regular ensemble to be atleast as good as the chip irregular ensembles.
+We note here that another reason for considering the regular code optimal amongst sparse random codes is to consider the field term when the Hamiltonian (REF ) is written in canonical form with a set of couplings (FORMULA ) and user specific external fields (FORMULA ). In this representation the set of external fields are in expectation aligned with the sent bit sequence, but subject to fluctuations for each code instance. The variance of these fluctuations may be shown to be proportional to the excess chip connectivity over the true chip connectivity {{cite:fb1434e1-5087-4f2c-8f29-a96e8ff7069e}}, which amongst all ensembles is minimised by the regular chip ensemble. The multi-user interference is larger in irregular codes and hence information recovery is weaker as predicted in this section.This argument is added since published version.
+
+Replica Method Outline
+We determine the static properties of our model defined in section , including
+correlations due to the full interaction structure, we use the replica method.
+From
+the expression of the Hamiltonian (REF ) we may identify a
+free energy and partition function as:
+FORMULA 
+To progress we make use of the anticipated self-averaging
+properties of the system. The assumption being that in the large
+system limit any two randomly selected instances will, with high
+probability, have indistinguishable statistical properties. This
+assumption has firm foundation in several related
+problems {{cite:313d61ce-3cc7-41b3-a310-ab164727ba35}}, and is furthermore intuitive after
+some reflection. If this assumption is true then the statists of
+any particular instance can be described completely by the free
+energy averaged over all instances of the disorder. We are thus
+interested in the quantity
+FORMULA 
+where the angled brackets represent the weighted averages over FORMULA 
+(the instances).
+The entropy density may be calculated from the free energy density
+by use of the relation
+FORMULA 
+where FORMULA  is the energy density.
+To determine the free energy we must average over disorder in (REF ), which is a difficult problem except in special cases.
+This is why we make use of the replica identity
+FORMULA 
+We can model the system now as one of interacting replicas, where
+FORMULA  is decomposed as a product of an integer number of partition
+functions with conditionally independent (given the instance of
+the disorder) dynamical variables. The discreteness of replicas is
+essential in the first part of the calculation, but a continuation
+to the real numbers is required in taking FORMULA  –
+this is a notorious assumption, which rigorous mathematics can not
+yet justify for the general case, in spite of the progress made in
+recent years {{cite:91d0bb26-300c-4ade-9ec7-63c775c4eaec}}, {{cite:1dbcf9fa-c83f-4693-8f7e-448191ab30e6}}, {{cite:c1441acc-6d09-478c-8c9c-92a07c8fd17c}}. However, we shall assume
+validity and since the methodology for the sparse structures is
+well established {{cite:769ba36e-b64b-46ef-b052-725bce21c42b}}, {{cite:c9f3fc4d-a780-4530-84cf-9d1acb0cd5c1}}, {{cite:313d61ce-3cc7-41b3-a310-ab164727ba35}} we omit our
+particular details. The final functional form for the free energy
+is determlained from
+FORMULA 
+where FORMULA  is a constant due to normalising the ensembles
+(REF ). This expression may be evaluated at the saddle point
+to give an expression for the free energy. In the term
+(REF ) we account for the cases in which the marginalised
+probability distribution FORMULA  and assumed marginal probability
+distribution (described by FORMULA ) are asymmetric. In the case of
+maximal rate which we will consider, the FORMULA  average is trivial
+and FORMULA . Provided that in addition the
+gain factor distribution is symmetric then it is
+possible to remove the FORMULA  dependence in the order parameters,
+since the symmetry FORMULA  and FORMULA  leaves the free energy
+invariant.
+
+Replica Symmetric Equations
+The concise form for our equations is attained using the
+assumption of replica symmetry (RS). This amounts to the
+assumption that the correlations amongst replicas are all
+identical, and determined by a unique shared distribution. The
+validity of this assumption may be self consistently tested
+(section REF ). This assumption differs from that used
+by Yoshida and Tanaka {{cite:d7315378-97ad-43d1-8c12-99739473a2e1}} where the correlations
+are described by only a handful of parameters rather than a
+distribution once RS is assumed – this approach may therefore
+miss some of the detailed structure although it is easier to
+handle numerically. The order parameter in our case is given by
+FORMULA 
+where FORMULA  is a variational normalisation constant and
+FORMULA  are normalised distributions on the interval
+FORMULA . From here onwards we may consider the case in which the
+bit variables FORMULA  and gain factors FORMULA  are
+gauged to FORMULA  (FORMULA , FORMULA ).
+Using Laplace's method, this gives the
+following expression for the (RS) free energy at the saddle point
+FORMULA 
+where
+FORMULA 
+and the saddle point value for FORMULA  (FORMULA ) has been introduced.
+The averages over FORMULA  and FORMULA  encapsulate the differences amongst the ensembles.
+Equation () describes the interaction at a
+single chip in the factor graph (figure REF ) of
+connectivity FORMULA . The parameter FORMULA  and variable FORMULA  are
+the gain factors, and reconstructed bits respectively,
+both gauged to the transmitted bit, while FORMULA  is the instance
+of the chip noise.
+The order variational distributions FORMULA  are chosen
+so as to extremise (REF ). The self consistent equations attained
+by the saddle point method are:
+FORMULA 
+The variables FORMULA  and FORMULA  are here the excess degree
+distributions of the particular ensemble (REF ). For regularly
+constrained ensembles the chip and user excesses are FORMULA  and
+FORMULA  respectively. For Poissonian distributions the excess degree
+distribution is the full degree distribution.
+Aside from entropy, the other quantities of interest may be determined from the
+probability distribution for the overlap of reconstructed and sent
+variables FORMULA ,
+FORMULA 
+We note finally that equivalent expressions to these found with the RS assumption
+may be obtained by using the cavity method {{cite:aa06808f-f657-49e9-91b7-e7d9f65ed7d8}} with the assumption of a single pure state.
+This approach is a probabilistic one and hence more intuitive on some levels.
+
+Population Dynamics
+Analysis of these equations is primarily constrained by the nature of
+equations (REF -). No exact solutions are apparent,
+and perturbative regimes about the ferromagnetic solution (which
+is only a solution for zero noise) are difficult to handle.
+Consequently we use population dynamics {{cite:a5cab7e5-095d-473e-89e2-a404c1f0a3b0}} –
+representing the distributions FORMULA  by finite populations (histograms) and iterating
+this distribution until convergence. It
+is hoped, and observed, that each histogram captures sufficient detail to
+describe the continuous function and the dynamics (described below) allow
+convergence towards a true solution distribution with only
+small corrections due to finite size effects.
+To solve the equations (REF ,) with population dynamics finite histograms constucted from FORMULA  undirected cavity magnetisations are used. Histograms approximating each function are formed
+FORMULA 
+with FORMULA  sufficiently large to provide good resolution in the desired performance measures.
+The discrete minimisation dynamics of the histograms is derived from (REF -). Histogram updates are undertaken alternately, with all magnetisation in the histogram being updated sequentially. In the update of field FORMULA  the quenched parameters FORMULA  are sampled, FORMULA  being the chip excess degree, and FORMULA  magnetisations are randomly chosen from FORMULA , defining through (REF ) the update
+FORMULA 
+The update of the other histogram follows dynamics in which FORMULA  is sampled, FORMULA  being the user excess degree, along with FORMULA  randomly chosen magnetisations from FORMULA , defining through () the update
+FORMULA 
+There is a strong analogy between the population dynamics
+algorithm and that of message passing on a particular instance of
+the graph. The iteration of the histograms implicit in
+(REF -REF ) is analogous to the
+propagation of a population of cavity magnetisations between
+factor (FORMULA ) and user (FORMULA ) nodes, which may be written as the
+self consistent equations:
+FORMULA 
+where FORMULA  are the relevant normalisations, and
+the abbreviation FORMULA  indicates the set of nodes
+connected to FORMULA . In population dynamics, the notion of a
+particular graph with labelled edges is absent however, and the
+only the distribution of the two types of magnetisations are
+relevant.
+
+Stability Analysis
+To test the stability of the obtained solutions we consider both the
+appearance of non-negative entropy, and a stability parameter
+defined through a consideration of the fluctuation
+dissipation theorem. The first criteria that the entropy be
+non-negative is based on the fact that physically viable solutions in
+discrete systems must have non-negative entropy so that any solution found not
+meeting this criteria must be based on bad premises; replica symmetry
+is a likely source.
+The stability parameter FORMULA  is defined in connection with
+the cavity method for spin glasses {{cite:2d1f0089-d539-403b-a57d-4bf8c3bd2d05}} and tests
+local stability of the solutions.
+It is equivalent to testing the local stability of belief
+propagation equations as proposed in {{cite:38a3b919-9df2-4ab4-a1c9-c58785c5cb28}}. A
+necessary condition for the stability of the FORMULA  solution is that
+the corresponding susceptibility does not
+diverge. This condition ensures that fields are not strongly
+correlated. The spin glass susceptibility when averaged over
+instances may be defined
+FORMULA 
+where FORMULA  is the distance between two nodes in the factor graph,
+the inner average denotes the connected correlation function
+between these nodes, FORMULA  describes the typical number of
+variables at distance FORMULA , and the outer average is over instances
+of the disorder (self-averaging part). This quantity is not
+divergent provided that
+FORMULA 
+is negative, since this indicates an asympoptically exponential
+decrease in the terms of (REF ) and hence convergence of
+the sum. In the thermodynamic limit the connected correlation
+function is dominated by a single direct path which may be
+decomposed as a chain of local linear susceptibilities
+FORMULA 
+where (i,j) indicate the set of variables on the shortest path
+between nodes 0 and FORMULA  in a particular instance of the graph
+(REF ).
+This representation allows us to construct an
+estimation for FORMULA  numerically based on principles similar
+to population dynamics {{cite:76f7e705-9ce8-4855-a5e5-c31c53b6b2f9}} – the directedness and fixed structure implicit in a particular problem is removed with the self-averaging assumption leaving a functional description similar to (REF -), which may be iterated.
+In order to approximate the stability parameter FORMULA  one introduces additional positive
+numbers in the population dynamics histograms (,REF ),
+FORMULA  and FORMULA  respectively.
+These new values represent the relative sizes of perturbations in each magnetisation,
+and are updated in parallel to (REF ,REF ) as
+FORMULA 
+and with similar assignments for the field update of  FORMULA
+FORMULA 
+The partial derivatives are calculated from (REF -REF ) and evaluated at the corresponding values in the sampled population.
+If the final fixed point is stable against small perturbations in the initial field then these values FORMULA  must decay exponentially on average. Renormalisation of FORMULA  and FORMULA  such that the mean is 1 after each update is necessary. The numerical renormalisation constant for each population yields (dependent) estimations of FORMULA , which can be sampled at a suitable convergence time (end of the FORMULA  minimisation process).
+Like population dynamics we expect behaviour to be sensitive to initialisation
+conditions and finite size effects in some circumstances.
+In addition the estimation
+requires good resolution in the histograms FORMULA  and FORMULA .
+
+Results
+Results are presented here for the canonical case of Binary Phase
+Shift Keying (BPSK) where FORMULA  with equal
+probability. Furthermore, we assume an AWGN model for the true
+noise FORMULA  (of variance FORMULA ). For evaluation purposes
+we assume the channel noise level is known precisely, so that
+FORMULA , employing the Nishimori
+temperature {{cite:57e90a6c-665a-4ac2-a781-3d613ec163de}}. This guarantees that the RS
+solution is thermodynamically dominant. Furthermore the energy
+takes a constant value at the Nishimori temperature and hence the
+entropy is affine to the free energy. Where of interest we plot
+the comparable statistics for the Single User Gaussian channel
+(SUG), and the densely spread ensemble, each with MPM detectors –
+equivalent to maximum likelihood for individual bits.
+For population dynamics two parallel populations (REF ,) are initialised either uniformly at
+random, or in the ferromagnetic state. These two populations are
+known to converge towards the unique solution, where one exists,
+from opposite directions, and so we can use their convergence as a
+criteria for halting the algorithm and testing for the appearance
+of multiple solutions. In the case where they converge to
+different solutions we can usually identify the solution converged to from
+the ferromagnetic initial state as a good solution - in the sense
+that it reconstructs well, and that arrived at from random
+initial state as a bad solution. In the equivalent belief
+propagation algorithm one cannot choose initial conditions equivalent to
+ferromagnetic – knowing the exact solution would of course makes
+the decoding redundant. We therefore expect the properties of the
+bad solution to be those realisable by belief propagation
+(though clever algorithms may be able to escape to the good
+solution under some circumstances). The stability variables FORMULA 
+were initialised independently each as the square of a value drawn from a gaussian distribution – and tests indicated other reasonable distributions produced similar results.
+Computer resources restrict the cases studied in detail to
+an intermediate FORMULA  regime, and small FORMULA . In particular, the
+problem at low FORMULA , is the Gaussian noise average, which is
+poorly estimated, while at high FORMULA  a majority of the histogram
+is concentrated at magnetisations FORMULA  not
+allowing sufficient resolution in the rest of the histogram.
+Several different measures are calculated from the converged order
+parameter, indicating the performance of sparsely-spread CDMA.
+Using the converged histograms for the fields we are able to
+determine the following quantities: free energy, energy and a
+histogram for the probability distribution, from discretisations
+of the previously presented equations
+(REF -). Using the probability
+distribution we are also able to approximate the decoding bit
+error rate
+FORMULA 
+multi-user efficiency
+FORMULA 
+and mutual information between sent and reconstructed bits per
+chip, FORMULA  (taking a factorised form given the RS
+assumption)
+FORMULA 
+The spectral efficiency is the capacity FORMULA  per chip,
+which is affine to the entropy (and the free energy at the Nishimori temperature)
+FORMULA 
+Negative entropy can be identified when the measured spectral
+efficiency exceeds the load, and thermodynamic transition points
+correspond to points of coincident spectral efficiency.
+Figure  REFThis figure has been modified from the published version, the difference being that the Poissonian chip connectivity codes have everywhere weaker performance than the dense and sparse regular code ensemble. demonstrates some general properties of
+the regular ensemble in which the variable and factor degree
+connectivities are FORMULA , respectively.
+Equations (REF -) were iterated
+using population dynamics and the relevant properties were
+calculated using the obtained solutions; the data presented is
+averaged over 100 runs and error-bars, which are typically small,
+are omitted for brevity. Figure REF (a) shows the
+bit error rate in regular and Poissonian codes, the inset focuses
+on the range where the sparse-regular and dense cases crossover.
+The sparse codes demonstrate similar trends to the dense case
+except the irregular code, which show weaker performance in
+general, and in particular at high FORMULA . Detailed
+trends can be seen in figure REF (b) that shows the
+multiuser efficiency. Codes with regular user connectivity show
+superior performance with respect to the dense case at low FORMULA .
+Figure REF (c) shows similar trends in the spectral
+efficiency and mutual information (shown in the inset); the effect
+of the disconnected (user) component is clear in the fact that the
+irregular code fails to reach capacity at high noise levels. In
+general it appears the chip connectivity distribution is not
+critical in changing the trends present, unlike the user
+connectivity distribution. It was found in these cases (and all
+cases with unique solutions for given FORMULA ), that the algorithm
+converged to non-negative entropy values and to a stability
+measure fluctuating about a value less than 0, as shown
+in figure REF (d). These points would indicate the
+suitability of the RS assumption.
+The outperformance of dense codes by sparse ensembles with regular
+user connectivity in the low FORMULA  regime is new to our knowledge, although Poissonian chip connectivity
+is everywhere inferior to both the dense and regular sparse codes.
+The difference between codes disappears rapidly with increasing (connection) density at fixed FORMULA 
+(figure  REF ).
+This is inline with our prediction of the regular code being a high performance ensemble in preceeding sections.
+FIGURE 
+Figure REF  indicates the effect of increasing
+density at fixed FORMULA  in the case of the regular code.
+As density is increased the statistics of the sparse
+codes approach that of the dense channel in all ensembles tested.
+For the irregular ensemble performance increases
+monotonically with density at all FORMULA . The rapid convergence to
+the dense case performance was elsewhere observed for partly
+regular ensembles, and ensembles based on a Gaussian prior
+input {{cite:d7315378-97ad-43d1-8c12-99739473a2e1}}, {{cite:ffbfd2b1-c949-496a-a501-8d1a513671b3}}. At all densities for
+which single solutions were found
+the RS assumption appeared validated in the stability parameter and entropy.
+FIGURE 
+Figure REF  indicates the effect of channel load
+FORMULA  on performance. We first explain results for codes in
+which only a single solution was found (no solution coexistence).
+For small values of the load a monotonic increase in the bit error
+rate, and capacity are observed as FORMULA  is increased with FORMULA 
+constant, as shown in figures REF (a) and
+ REF (b), respectively. This matches the trend in the
+dense case, the dense code becoming superior in performance to the
+sparse codes as FORMULA  increases. We found that for all sparse ensembles
+there existed regimes with FORMULA  for which only a single
+stable solution existed, although the equivalent dense systems are known to have
+two stable solutions in some range of FORMULA  {{cite:a7e9ccb6-e1dd-497c-8e75-67f4e2178e97}}. In all
+single valued regimes we observed positive entropy, and a negative
+stability parameter. However, in cases of large FORMULA  many
+features became
+more pronounced close to the dense case solution coexistence
+regime: notably the cusp in the stability parameter, gap between
+FORMULA  and
+FORMULA  and the gradient in FORMULA .
+Solution Coexistence Regimes
+FIGURE 
+As in the case of dense CDMA {{cite:a7e9ccb6-e1dd-497c-8e75-67f4e2178e97}}, also here we
+observe a regime where two solutions, of quite different
+performance, coexist. In order to investigate the regime where two
+solutions coexist we investigated the states arrived at from
+random and ferromagnetic initial conditions (giving bad and good solutions respectively).
+Separate heuristic
+convergence criteria were found for the histograms, and these
+seemed to work well for the good solution. For the bad solution
+we simply present results after
+a fixed number of histogram updates (500) as all convergence
+criteria tested appeared either too stringent, to require
+experimentally inaccessible timescales, or did not capture the
+asymptotic values for important quantities like entropy. We believe 500 updates to be
+sufficiently conservative to capture the properties of these solutions however.
+Figure REF (a) shows the dependence of the bit error
+rate on the load, which is also equivalent to FORMULA . There is a
+monotonic increase in bit error rate with the load and the
+emergence and coexistence of two separate solutions above a
+certain point; in the case of the FORMULA  code the point above which
+the two solutions coexist is FORMULA  as indicated by the
+vertical dotted line.
+We use the regular code FORMULA  to demonstrate the solution
+coexistence found above some FORMULA  in various codes.
+The onset of the bimodal
+distribution can be identified by the divergence in the
+convergence time in the single solution regime (the time for the ferromagnetic and random
+histograms to converge to a common distribution). The time for
+this to occur, in a heuristically chosen statistic and accuracy,
+is plotted in figure REF (b). By a naive linear
+regression across 3 decades we found a power law exponent of
+FORMULA  and a transition point of FORMULA , but cannot
+provide a goodness of fit measure
+to this data. This would represent the point at which at least two
+stable solutions co-exist.
+Beyond FORMULA  only one stable solution is found from
+both random and ferromagnetic initial conditions, corresponding
+statistically to a continuation of the good solution. A solution
+which statistically resembles a continuation of the bad solution is
+occasionally arrived at from both initial conditions, this solution
+had a positive stability parameter and negative entropy – so is
+not a viable solution. Thus we predict a second
+dynamical transition in the region of FORMULA , as might be guessed
+by comparison with the dense case and observation of the trend in
+the stability parameter (see figure REF (c)).
+The stability results are presented in figure REF (c).
+Only two stable solutions were found in the region beyond this
+critical point and upto FORMULA , which we infer to be viable RS
+solutions (where entropy is positive). The bad solution upto 12dB has a well resolved negative value. The good solution has a negative value in its mean, but like other near ferromagnetic solutions investigated results are very noisy due to numerical issues relating to histogram resolution.
+Both capacity and spectral efficiency monotonically increase with
+the load as shown in figure REF (d). For the FORMULA 
+code we see a separation of the two solutions at FORMULA 
+(vertical dotted line.) The dashed lines correspond to a similar
+behaviour observed in the dense case (the range of interest is
+magnified in the inset.) A cross over in the entropy of the two
+distinct solutions, near FORMULA , is indicative of a
+second order phase transition. As in the dense case, only the solution of smallest spectral
+efficiency is thermodynamically relevant at a given FORMULA , although the other is
+likely to be important in decoding dynamics.
+The trends in the sparse case follow the dense case qualitatively, with the good solution having performance only slightly worse than the corresponding solution in the dense case (and vice versa for the bad solution).
+The entropy of the bad solution becomes negative in a small
+interval (spectral efficiency exceeds 2) although no local instability
+is observed. The static and dynamic properties of the histograms appear to be well resolved in this region.
+However, the negative entropy indicates an instability towards either a type of solution not captured within the RS assumption, or towards some metastable configuration. We will not speculate further, the bad solution is in any case thermodynamically subdominant in its low and negative entropy form.
+Our hypothesis is therefore that the trends in the sparse
+ensembles match those in the dense ensembles within the
+coexistence region and FORMULA  continues to be valid for each of two
+distinct positive entropy solutions. The coexistence region for the sparse codes is
+however smaller than in the corresponding dense ensembles. Since our histogram
+updates mirror the properties of a belief propagation algorithm on
+a random graph we can suspect that the bad solution may have implications for the
+performance of belief propagation decoding in the
+coexistence region, and that convergence problems will appear near
+this region. In the user regular codes investigated the bad solution of the
+sparse ensemble outperforms the bad solution of the dense
+ensemble, and vice-versa for the good solution. Thus regardless of whether
+sparse decoding performance is good or bad, the dynamical transition point for the dense ensemble would
+corresponds to a FORMULA  beyond which dense CDMA outperforms sparse
+CDMA at a particular load.
+
+Spectral Efficiency Lower Bound Numerical Results
+Finally we present figure REF , which shows the
+the mutual information between a single chip and transmitted bits for sparse ensembles of differing chip
+connectivity in the infinite FORMULA  (zero noise) limit (REF ). This shows
+that in expectation a chip drawn from the regular ensemble contains more information on the transmitted bits than a chip drawn from any other ensemble (including the Poissonian ensemble).
+The difference between the regular and Poissonian ensembles becomes relatively smaller as FORMULA  increases.
+This appears consistent with the replica method results found at high FORMULA , although regular chip
+connectivity under performed by comparison with Poisson
+distributed chip connectivity in the low FORMULA  regime, which was
+not anticipated by the single chip approximation.
+FIGURE 
+
+Concluding Remarks
+Our results demonstrate the feasibility of sparse regular codes
+for use in CDMA. At moderate FORMULA  it seems the performance of
+sparse regular codes may be very good. With the replica symmetric
+assumption apparently valid at practical FORMULA  it is likely that
+fast algorithms based on belief propagation may be very successful
+in achieving the theoretical results. Furthermore for lower
+density sparse codes the problem of the coexistence regime, which
+limits the performance of practical decoding methods, seems to be
+less pervasive than for dense ensembles in the over saturated
+regime.
+A direct evaluation of the properties of belief propagation may
+prove similar results to those shown here. In the absence of
+replica symmetry breaking states it is normally true that belief
+propagation performs very well. However, to make best use of the
+channel resources it may be preferable to implement high load
+regimes in cases of high FORMULA , and so overcoming the algorithmic
+problems arising from the solution coexistence is a challenge of
+practical importance in this case.
+Other practical issues in implementation are certainly
+significant. Similar to the case of dense CDMA there are
+considerable problems relating to multipath, fading and power
+control, in fact it is known that these effects are more
+disruptive for the sparse codes, especially regular codes.
+However, certain situations such as broadcasting (one to many)
+channels and downlink CDMA, where synchronisation can be assumed,
+may be practical points for future implementation. There are
+practical advantages of the sparse case over dense and orthogonal
+codes in some regimes. The sparse CDMA method is likely to be
+particularly useful in frequency-hopping and time-hopping code
+division multiple access (FH and TH -CDMA) applications where the
+effect of these practical limitations is less emphasised.
+Extensions based on our method to cases without power control or
+synchronisation have been attempted and are quite difficult. A
+consideration of priors on the inputs, in particular the effects
+when sparse CDMA is combined with some encoding method may also be
+interesting.
+Support from EVERGROW, IP No. 1935 in FP6 of the EU is
+gratefully acknowledged. DS would like to thank Ido Kanter for
+helpful discussions.
+
+Bibliography
