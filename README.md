@@ -1,7 +1,8 @@
 # citationcode
 
 citationparse.ipynb 
-Code Features -> 
+
+Features -> 
 
 Read file, parse it into sentences, fixes wrong formatting of the text file
 Finds all citations in that sentences. 
