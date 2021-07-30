@@ -1,21 +1,12 @@
 # citationcode
 
-citationparse.ipynb 
+You will have to change directory variable to the directory of unarXive-2020/papers on your local. 
 
-**Features:**
+Step 1: createdb.ipynb: Creates databases. 
 
-Read file, parse it into sentences, fixes wrong formatting of the text file
+Step 2: sentenceparse.ipynb: Reads files, parses it into sentencess, fixes wrong formatting of the text files. Finds all citations in sentences. 
 
-Finds all citations in that sentences. 
-
-Detects the FTFTF pattern. 
-
-
-**To do**
-
-Different data format
-
-Ability to loop through all of the files in a folder
+Step 3: citationparse.ipynb: Detects the FTFTF pattern. 
 
 **citation.db** - Contains the sentences of the FTFTF pattern, and contains the unique sentence id of the sentences that have citations, Also contains the arxiv of the original paper 
 
