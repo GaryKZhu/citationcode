@@ -1,6 +1,7 @@
 # citationcode
 
-You will have to change directory variable to the directory of unarXive-2020/papers on your local. 
+**Notes** 
+You will have to change directory variable to the directory of unarXive-2020/papers on your local in sentenceparse.ipynb and citationparse.ipynb.
 
 Step 1: createdb.ipynb: Creates databases. 
 
